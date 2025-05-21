@@ -1,15 +1,14 @@
 {
   "name": "electron-deploy-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/main.js",
+  "description": "An Electron + Vue demo app for testing deployment",
+  "main": "main.js",
   "scripts": {
     "start": "wait-on http://localhost:5173/ && echo 'Server started' && electron .",
-    "react-start": "cd src/react-project/ && npm run dev",
-    "vue-start": "cd src/vue-project/ && npm run dev",
-    "angular-start": "cd src/angular-project/ && npm run start",
+    "vue-start": "cd vue-project && npm run dev",
     "dev": "concurrently -k \"npm run vue-start\" \"npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "electron:build": "cross-env NODE_ENV=production electron-builder --win"
   },
   "keywords": [],
   "author": "",
@@ -18,8 +17,23 @@
   "devDependencies": {
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "electron": "^35.1.2",
+    "electron": "^35.4.0",
     "electron-builder": "^26.0.12",
     "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.yourname.yourapp",
+    "productName": "YourAppName",
+    "files": [
+      "vue-project/dist/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": "nsis"
+    }
   }
 }
